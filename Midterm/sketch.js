@@ -18,6 +18,8 @@ var paddleA, paddleB, ball, wallTop, wallBottom;
 var MAX_SPEED = 7;
 
 var ballPos;
+// var ball;
+
 function setup() {
 
     ourPortInput = createInput();
@@ -38,11 +40,13 @@ function setup() {
             console.log(msg);
 
 
-            if (msg[0] == "/mouseY") {
+            if (msg[0] == "/player/position") {
                 otherMouseY = parseInt(msg[1]);
             }
-            if (msg[0] == "/ball") {
-                ballPos = parseInt(msg[1]);
+            if (msg[0] == "/ball/position") {
+                // ballPos = parseInt(msg[1]);
+                ball.position.x = parseInt(msg[1]);
+                ball.position.y = parseInt(msg[2]);
             }
            
         });
@@ -117,8 +121,8 @@ function draw() {
 
         if (oscClient != undefined) {
         // oscClient.send('/mouseX', mouseX);
-        oscClient.send('/mouseY', mouseY);
-        oscClient.send('/ball', -ball)
+        oscClient.send('/player/position', mouseY);
+        oscClient.send('/ball/position', -ball.position.x, ball.position.y);
 
     }
 
